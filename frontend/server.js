@@ -189,7 +189,14 @@ function callBackend(path) {
       let data = '';
 
       res.on('data', chunk => data += chunk);
-      res.on('end', () => resolve(data));
+
+      res.on('end', () => {
+        if (res.statusCode !== 200) {
+          return reject(new Error(`Backend returned ${res.statusCode}`));
+        }
+
+        resolve(data);
+      });
     }).on('error', reject);
   });
 }
