@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import * as os from 'os';
-import { pool } from './pool';
+import { pool } from './database/pool';
 
 @Controller()
 export class AppController {
@@ -15,7 +15,7 @@ export class AppController {
   @Get('users')
   async getUsers() {
     try {
-      const res = await this.pool.query('SELECT id, name FROM users');
+      const res = await pool.query('SELECT id, name FROM users');
       return res.rows;
     } catch (err) {
       throw new InternalServerErrorException('Database connection failed');
