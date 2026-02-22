@@ -2,6 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import * as os from 'os';
 import { pool } from './database/pool';
+import { InternalServerErrorException } from '@nestjs/common';
 
 @Controller()
 export class AppController {
