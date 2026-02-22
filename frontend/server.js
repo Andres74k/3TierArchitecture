@@ -6,6 +6,7 @@ const AZ = process.env.AZ || "missing-AZ";
 
 
 fastify.get('/', async (request, reply) => {
+  reply.type('text/html');
   return `
     <h1>Frontend (Fastify)</h1>
     <br>
