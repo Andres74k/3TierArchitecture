@@ -97,7 +97,7 @@ fastify.get('/', async (request, reply) => {
       <h1>Frontend (Fastify)</h1>
 
       <div class="card">
-        <div class="label">Availability Zone</div>
+        <div class="label">Front-End Availability Zone</div>
         <div class="value" id="AZ">Loading...</div>
       </div>
 
