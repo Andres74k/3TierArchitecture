@@ -7,6 +7,9 @@ const APP_ALB = process.env.APP_ALB_DNS || "missing-alb";
 fastify.get('/', async (request, reply) => {
   return `
     <h1>Frontend (Fastify)</h1>
+    <br>
+    <h1>Instance is running in:</h1>
+    <h2>$AZ</h2>
     <h2 id="backend">Loading...</h2>
 
     <script>
