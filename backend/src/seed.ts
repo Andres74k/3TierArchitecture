@@ -18,7 +18,7 @@ async function seed() {
   `);
 
   await client.query(`
-    INSERT INTO users (name) VALUES ('Alice'), ('Bob');
+    INSERT INTO users (name) VALUES ('Alice'), ('Bob') WHERE NOT EXISTS;
   `);
 
   await client.end();
