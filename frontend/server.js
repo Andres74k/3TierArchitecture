@@ -180,7 +180,7 @@ fastify.get('/users', async (request, reply) => {
 });
 
 fastify.get('/AZ', async (request, reply) => {
-  return AZ;
+  return await getAvailabilityZone();
 });
 
 function callBackend(path) {
@@ -198,6 +198,31 @@ function callBackend(path) {
         resolve(data);
       });
     }).on('error', reject);
+  });
+}
+
+async function getAvailabilityZone() {
+  const metadataUri = process.env.ECS_CONTAINER_METADATA_URI_V4;
+
+  if (!metadataUri) {
+    return "not-running-in-ecs";
+  }
+
+  return new Promise((resolve) => {
+    http.get(`${metadataUri}/task`, res => {
+      let data = '';
+
+      res.on('data', chunk => data += chunk);
+
+      res.on('end', () => {
+        try {
+          const meta = JSON.parse(data);
+          resolve(meta.AvailabilityZone || "az-not-found");
+        } catch {
+          resolve("metadata-error");
+        }
+      });
+    }).on('error', () => resolve("metadata-unreachable"));
   });
 }
 
