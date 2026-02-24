@@ -13,18 +13,19 @@ resource "aws_lb_target_group" "web" {
   port     = 3000
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
+  target_type = "ip"
   health_check {
     path = "/"
     protocol = "HTTP"
   }
 } 
 
-resource "aws_lb_target_group_attachment" "web" {
-  target_group_arn = aws_lb_target_group.web.arn
-  for_each = aws_instance.web
-  target_id        = each.value.id
-  port             = 3000
-}
+# resource "aws_lb_target_group_attachment" "web" {
+#   target_group_arn = aws_lb_target_group.web.arn
+#   for_each = aws_instance.web
+#   target_id        = each.value.id
+#   port             = 3000
+# }
 
 resource "aws_lb_listener" "web_http" {
   load_balancer_arn = aws_alb.public.arn
@@ -76,18 +77,19 @@ resource "aws_lb_target_group" "app" {
   port     = 3000
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
+  target_type = "ip"
   health_check {
     path = "/"
     protocol = "HTTP"
   }
 } 
 
-resource "aws_lb_target_group_attachment" "app" {
-  target_group_arn = aws_lb_target_group.app.arn
-  for_each = aws_instance.app
-  target_id        = each.value.id
-  port             = 3000
-}
+# resource "aws_lb_target_group_attachment" "app" {
+#   target_group_arn = aws_lb_target_group.app.arn
+#   for_each = aws_instance.app
+#   target_id        = each.value.id
+#   port             = 3000
+# }
 
 resource "aws_lb_listener" "app_listener" {
   load_balancer_arn = aws_alb.private.arn
